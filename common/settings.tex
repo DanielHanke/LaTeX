@@ -1,0 +1,167 @@
+\usepackage{tabularx}
+\usepackage[pdftex]{graphicx}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+%\usepackage{hyperref}
+\usepackage{listings}
+
+
+%\usepackage{arimo}
+%\usepackage{alegreya} %mas o menos%
+%\usepackage{arev} %mejor%
+\usepackage{bera}
+
+
+%\usepackage[thinlines]{easytable}
+%\usepackage[export]{adjustbox}
+\usepackage{float}
+\restylefloat{table}
+\renewcommand{\arraystretch}{1.5}
+
+
+
+\renewcommand*\familydefault{\sfdefault} %% Only if the base font of the document is to be sans serif
+\usepackage[T1]{fontenc}
+%\usepackage[table]{xcolor}% http://ctan.org/pkg/xcolor
+
+\newcommand{\todo}[1]{\tiny{\emph{to-do: #1}}\normalsize}
+
+\usepackage{amssymb}
+%\usepackage{enumitem,xcolor}
+
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+\usepackage{epigraph}
+\usepackage{lipsum}
+\renewcommand\epigraphflush{flushleft}
+\renewcommand\epigraphsize{\normalsize}
+\setlength\epigraphwidth{0.7\textwidth}
+
+
+
+% para trend!
+
+
+
+
+% las negritas en bluetenaris
+\let\oldtextbf\textbf
+\renewcommand{\textbf}[1]{\textcolor{colorPrincipal}{\oldtextbf{#1}}}
+
+% las italicas en bluetenaris
+\let\oldemph\emph
+\renewcommand{\emph}[1]{\textcolor{colorPrincipal}{\oldemph{#1}}}
+
+\usepackage{sectsty}
+\sectionfont{\color{colorPrincipal}}  % sets colour of chapters
+\subsectionfont{\color{colorSecundario}}  % sets colour of sections
+\subsubsectionfont{\color{colorTerciario}}  % sets colour of sections
+
+\DeclareFixedFont{\titlefont}{T1}{ppl}{b}{it}{0.5in}
+\makeatletter                       
+\def\printauthor{%                  
+    {\large \@author}}              
+\makeatother
+
+\newcommand\titlepagedecoration[1]{%
+\begin{tikzpicture}[remember picture,overlay,shorten >= -10pt]
+\coordinate (tp1) at ([yshift=2cm]current page.west);
+\coordinate (tp2) at ([yshift=2cm,xshift=9cm]current page.west);
+\coordinate (tp3) at ([yshift=-15pt,xshift=7cm]current page.north);
+\coordinate (tp4) at ([yshift=-15pt]current page.north west);
+% Place text to het its coordinates
+\node[right] (titletext) at ([xshift=1cm,yshift=-5cm]current page.north west) {\parbox{\textwidth}{\color{white}#1}};
+
+\path[name path=p1] ([xshift=-5cm]tp2) -- ([xshift=-5cm]tp3);
+\path[name path=p2] (tp2) -- (tp3);
+\path[name path=p3] (tp1 |- titletext.south) -- (titletext.south -| tp3);
+
+\path[name intersections={of=p1 and p3,name=first}];
+\path[name intersections={of=p2 and p3,name=second}];
+
+\filldraw[colorTerciario!60!white] (first-1) -- (second-1) -- (tp3) -- ([xshift=-5cm]tp3) -- cycle;
+\filldraw[colorTerciario!40!white] (tp4) -- ([xshift=-5cm]tp3) -- (first-1) -- (tp1 |- titletext.south) -- cycle;
+\filldraw[colorTerciario!60!white] (tp1 |- titletext.south) -- (first-1) -- ([xshift=-5cm]tp2) -- (tp1) -- cycle;
+\filldraw[colorTerciario!40!white] (first-1) -- (second-1) -- (tp2) -- ([xshift=-5cm]tp2) -- cycle;
+
+% X = -6 <-> 16
+
+\filldraw[colorPrincipal]  (-6,5) rectangle (2,4.5);
+\filldraw[colorSecundario]  (2,5) rectangle (10,4.5);
+\filldraw[colorTerciario]  (10,5) rectangle (18,4.5);
+
+%\filldraw[gray!100!white]  (-3.+18,4.0    ) rectangle (-1.5+18,4.2); % 1w
+%\filldraw[gray!80!white]    (-4.6+18,4.0	 ) rectangle (-3.1+18,4.2); %1.5w
+%\filldraw[gray!60!white]    (-6.7+18,4.0	 ) rectangle (-4.7+18,4.2);
+%\filldraw[gray!40!white]    (-9.3+18,4.0	 ) rectangle (-6.8+18,4.2);
+%\filldraw[gray!20!white]    (-13.4+18,4.0) rectangle (-9.4+18,4.2);
+
+%\filldraw[gray!100!white]  (-3.+18,4.0    ) rectangle (-1.5+18,4.2); % 1w
+%\filldraw[gray!80!white]    (-4.6+18,4.0	 ) rectangle (-3.1+18,4.2); %1.5w
+%\filldraw[gray!60!white]    (-6.7+18,4.0	 ) rectangle (-4.7+18,4.2);
+%\filldraw[gray!40!white]    (-9.3+18,4.0	 ) rectangle (-6.8+18,4.2);
+%\filldraw[gray!20!white]    (-13.4+18,4.0) rectangle (-9.4+18,4.2);
+
+
+
+% Place text again, to have it on top
+\node[right] (titletext) at ([xshift=1cm,yshift=-5cm]current page.north west) {\parbox{\textwidth}{\color{colorPrincipal}#1}};
+
+
+\end{tikzpicture}%
+}
+
+\lstset{% general command to set parameter(s)
+keywordstyle=\color{violet!55}\bfseries,
+%keywordstyle=\color{blue}\bfseries\underbar,
+% underlined bold black keywords
+identifierstyle=\color{blue!60}, % nothing happens
+commentstyle=\color{gray!70}, % white comments
+stringstyle=\color{red!75}, % typewriter type for strings
+numbers=left,
+numberblanklines=false,
+%frame=topline
+backgroundcolor=\color{gray!10},
+showstringspaces=false,
+literate=*{0}{{\textcolor{violet}{0}}}{1}%
+             {1}{{\textcolor{violet}{1}}}{1}%
+             {2}{{\textcolor{violet}{2}}}{1}%
+             {3}{{\textcolor{violet}{3}}}{1}%
+             {4}{{\textcolor{violet}{4}}}{1}%
+             {5}{{\textcolor{violet}{5}}}{1}%
+             {6}{{\textcolor{violet}{6}}}{1}%
+             {7}{{\textcolor{violet}{7}}}{1}%
+             {8}{{\textcolor{violet}{8}}}{1}%
+             {9}{{\textcolor{violet}{9}}}{1}%
+             {.0}{{\textcolor{violet}{.0}}}{2}%
+             {.1}{{\textcolor{violet}{.1}}}{2}%
+             {.2}{{\textcolor{violet}{.2}}}{2}%
+             {.3}{{\textcolor{violet}{.3}}}{2}%
+             {.4}{{\textcolor{violet}{.4}}}{2}%
+             {.5}{{\textcolor{violet}{.5}}}{2}%
+             {.6}{{\textcolor{violet}{.6}}}{2}%
+             {.7}{{\textcolor{violet}{.7}}}{2}%
+             {.8}{{\textcolor{violet}{.8}}}{2}%
+             {.9}{{\textcolor{violet}{.9}}}{2}%
+             {=}{{\textcolor{violet}{=}}}{1}%
+             {>}{{\textcolor{violet}{>}}}{1}%
+             {<}{{\textcolor{violet}{<}}}{1}%
+             {*}{{\textcolor{violet}{*}}}{1}%
+             %{/}{{\textcolor{violet}{/}}}{1}% stuffs up comments
+             {+}{{\textcolor{violet}{+}}}{1}%
+             {-}{{\textcolor{violet}{-}}}{1}%
+             {\%}{{\textcolor{violet}{\%}}}{1}%
+             {:}{{\textcolor{violet}{:}}}{1}%
+             {;}{{\textcolor{violet}{;}}}{1}%
+             {,}{{\textcolor{violet}{,}}}{1}%
+             {\&}{{\textcolor{violet}{\&}}}{1}%
+             {(}{{\textcolor{violet}{(}}}{1}%
+             {)}{{\textcolor{violet}{)}}}{1}%
+             {\{}{{\textcolor{violet}{\{}}}{1}%
+             {\}}{{\textcolor{violet}{\}}}}{1}%
+             ,
+} % no special string spaces
+
+\renewcommand{\lstlistingname}{Ejemplo}% Listing -> Algorithm
+\renewcommand{\lstlistlistingname}{Ejemplos de}
