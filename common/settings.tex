@@ -80,10 +80,10 @@
 \path[name intersections={of=p1 and p3,name=first}];
 \path[name intersections={of=p2 and p3,name=second}];
 
-\filldraw[colorTerciario!60!white] (first-1) -- (second-1) -- (tp3) -- ([xshift=-5cm]tp3) -- cycle;
-\filldraw[colorTerciario!40!white] (tp4) -- ([xshift=-5cm]tp3) -- (first-1) -- (tp1 |- titletext.south) -- cycle;
-\filldraw[colorTerciario!60!white] (tp1 |- titletext.south) -- (first-1) -- ([xshift=-5cm]tp2) -- (tp1) -- cycle;
-\filldraw[colorTerciario!40!white] (first-1) -- (second-1) -- (tp2) -- ([xshift=-5cm]tp2) -- cycle;
+\filldraw[colorSecundario!60!white] (first-1) -- (second-1) -- (tp3) -- ([xshift=-5cm]tp3) -- cycle;
+\filldraw[colorSecundario!40!white] (tp4) -- ([xshift=-5cm]tp3) -- (first-1) -- (tp1 |- titletext.south) -- cycle;
+\filldraw[colorSecundario!60!white] (tp1 |- titletext.south) -- (first-1) -- ([xshift=-5cm]tp2) -- (tp1) -- cycle;
+\filldraw[colorSecundario!40!white] (first-1) -- (second-1) -- (tp2) -- ([xshift=-5cm]tp2) -- cycle;
 
 % X = -6 <-> 16
 
@@ -97,6 +97,11 @@
 %\filldraw[gray!40!white]    (-9.3+18,4.0	 ) rectangle (-6.8+18,4.2);
 %\filldraw[gray!20!white]    (-13.4+18,4.0) rectangle (-9.4+18,4.2);
 
+%\node[inner sep=0pt] (russell) at (0,0)
+%    {\includegraphics[width=.25\textwidth]{../../../common/images/coding-on-laptop.jpg}};
+%\node[inner sep=0pt] (whitehead) at (5,-6)
+%    {\includegraphics[width=.25\textwidth]{../../../common/images/logo_trend.jpg}};
+
 %\filldraw[gray!100!white]  (-3.+18,4.0    ) rectangle (-1.5+18,4.2); % 1w
 %\filldraw[gray!80!white]    (-4.6+18,4.0	 ) rectangle (-3.1+18,4.2); %1.5w
 %\filldraw[gray!60!white]    (-6.7+18,4.0	 ) rectangle (-4.7+18,4.2);
@@ -106,7 +111,7 @@
 
 
 % Place text again, to have it on top
-\node[right] (titletext) at ([xshift=1cm,yshift=-5cm]current page.north west) {\parbox{\textwidth}{\color{colorPrincipal}#1}};
+\node[right] (titletext) at ([xshift=1cm,yshift=-5cm]current page.north west) {\parbox{\textwidth}{\color{black}#1}};
 
 
 \end{tikzpicture}%
@@ -165,3 +170,39 @@ literate=*{0}{{\textcolor{violet}{0}}}{1}%
 
 \renewcommand{\lstlistingname}{Ejemplo}% Listing -> Algorithm
 \renewcommand{\lstlistlistingname}{Ejemplos de}
+
+\renewcommand*\thesection{\arabic{section}}
+
+\usepackage[explicit]{titlesec}
+
+\titleformat{\section}[hang]{\Large\bfseries\sffamily}%
+{\rlap{\color{colorPrincipal}\rule[-6pt]{\textwidth}{1.2pt}}\colorbox{colorPrincipal}{%
+           \raisebox{0pt}[13pt][3pt]{ \makebox[60pt]{% height, width
+                \fontfamily{phv}\selectfont\color{white}{\thesection}}
+            }}}%
+{15pt}%
+{ \color{colorPrincipal}#1
+%
+}
+
+\titleformat{\subsection}[hang]{\Large\bfseries\sffamily}%
+{\rlap{\color{colorSecundario}\rule[-6pt]{\textwidth}{1.2pt}}\colorbox{colorSecundario}{%
+           \raisebox{0pt}[13pt][3pt]{ \makebox[60pt]{% height, width
+                \fontfamily{phv}\selectfont\color{white}{\thesubsection}}
+            }}}%
+{13pt}%
+{ \color{colorSecundario}#1
+%
+}
+
+\titleformat{\subsubsection}[hang]{\Large\bfseries\sffamily}%
+{\rlap{\color{colorTerciario}\rule[-6pt]{\textwidth}{1.2pt}}\colorbox{colorTerciario}{%
+           \raisebox{0pt}[13pt][3pt]{ \makebox[60pt]{% height, width
+                \fontfamily{phv}\selectfont\color{white}{\thesubsubsection}}
+            }}}%
+{12pt}%
+{ \color{colorTerciario}#1
+%
+}
+
+\titlespacing*{\section}{0pt}{3mm}{5mm}
