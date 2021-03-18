@@ -5,6 +5,7 @@
 \usepackage{array}
 %\usepackage{hyperref}
 \usepackage{listings}
+\usepackage[parfill]{parskip}
 
 
 %\usepackage{arimo}
@@ -178,24 +179,24 @@ literate=*{0}{{\textcolor{violet}{0}}}{1}%
 \titleformat{\section}[hang]{\Large\bfseries\sffamily}%
 {\rlap{\color{colorPrincipal}\rule[-6pt]{\textwidth}{1.2pt}}\colorbox{colorPrincipal}{%
            \raisebox{0pt}[13pt][3pt]{ \makebox[60pt]{% height, width
-                \fontfamily{phv}\selectfont\color{white}{\thesection}}
+                 \fontfamily{phv}\selectfont\color{white}{\thesection}}
             }}}%
 {15pt}%
 { \color{colorPrincipal}#1
 %
 }
 
-\titleformat{\subsection}[hang]{\Large\bfseries\sffamily}%
+\titleformat{\subsection}[hang]{\large\bfseries\sffamily}%
 {\rlap{\color{colorSecundario}\rule[-6pt]{\textwidth}{1.2pt}}\colorbox{colorSecundario}{%
            \raisebox{0pt}[13pt][3pt]{ \makebox[60pt]{% height, width
                 \fontfamily{phv}\selectfont\color{white}{\thesubsection}}
             }}}%
-{13pt}%
+{15pt}%
 { \color{colorSecundario}#1
 %
 }
 
-\titleformat{\subsubsection}[hang]{\Large\bfseries\sffamily}%
+\titleformat{\subsubsection}[hang]{\normal\bfseries\sffamily}%
 {\rlap{\color{colorTerciario}\rule[-6pt]{\textwidth}{1.2pt}}\colorbox{colorTerciario}{%
            \raisebox{0pt}[13pt][3pt]{ \makebox[60pt]{% height, width
                 \fontfamily{phv}\selectfont\color{white}{\thesubsubsection}}

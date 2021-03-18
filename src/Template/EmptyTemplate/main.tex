@@ -1,6 +1,5 @@
 \documentclass{article}
 
-% --------------------------------------------------------------------------------------------------------------------------------------
 \newcommand{\proyecto}[0]{MY FIRST PROJECT} %  TITLE
 \newcommand{\actividad}[0]{This is my first project} %  DESCRIPTION
 \newcommand{\docversion}[0]{1.0} % VERSION
@@ -10,22 +9,21 @@
 	\textbf{Autor}\\    
     Daniel E. Hanke \\
    empresa \\
-    \texttt{daniel@automacion.com}\vspace{20pt} \\
+    \texttt{daniel@outmacion.com}\vspace{20pt} \\
 	\textbf{Supervisor}\\    
     Jose pepe \\
     empresa \\
     \texttt{pepe@pepe.com}
     }
-% --------------------------------------------------------------------------------------------------------------------------------------
 
 \usepackage[table]{xcolor}
 
 \input{../../../Common/colors} % rgb common colors inside
 
 % Color used in whole project
-\colorlet{colorPrincipal}{awesome!100!}
-\colorlet{colorSecundario}{bostonuniversityred!100!}
-\colorlet{colorTerciario}{brickred!100!}
+\colorlet{colorPrincipal}{blue(munsell)!100!}
+\colorlet{colorSecundario}{blue(munsell)!80!}
+\colorlet{colorTerciario}{blue(munsell)!70!}
 
 \input{../../../Common/Settings}
 
@@ -40,13 +38,9 @@
 
 \tableofcontents
 
-\newpage
-
-\section{Versiones del documento}
-
 \input{./versions}
 
-\newpage
+
 
 % --------------------------------------------------------------------------------------------------------------------------------------
 % --------------------------------------------------------------------------------------------------------------------------------------
@@ -55,12 +49,13 @@
 
 
 
-\input{./chapters/introduccion}
+\input{./chapters/introduccion/objetivo}
+\input{./chapters/introduccion/audiencia}
 \newpage
 \input{./chapters/glosario}
 \newpage
-\input{./chapters/funcionalidadActual}
-\input{./chapters/funcionalidadPropuesta}
+\input{./chapters/FuncionalidadActual}
+\input{./chapters/FuncionalidadPropuesta}
 % ......
 
 
