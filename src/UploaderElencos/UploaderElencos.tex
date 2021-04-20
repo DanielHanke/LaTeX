@@ -1,0 +1,320 @@
+\documentclass[]{article}
+
+\usepackage{enumitem,xcolor}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{bera}
+\renewcommand*\familydefault{\sfdefault} %% Only if the base font of the document is to be sans serif
+\usepackage[T1]{fontenc}
+\usepackage{xcolor,listings}
+
+%opening
+\title{}
+\author{}
+
+\begin{document}
+
+
+\section{Relevamiento de Applet Uploader}
+
+\par El applet trabaja con 3 entidades ( Ya Pablo me confirmó que deben ir las 3 entidades )
+
+\begin{itemize}[label=\textcolor{blue}{\textbullet}]
+	\item Elencos ( y toda su información asociada )
+	\item Descartes
+	\item Patrones
+
+\end{itemize}
+
+\newpage
+
+\subsection{Elencos}
+
+\par Para saber qué elencos debe transferir utiliza esta vista 
+\emph{vwBMEUploaderNoDocumentados}
+
+\par Items que debe retornar esa vista:
+
+\begin{itemize}[label=\textcolor{blue}{\textbullet}]
+	\item dbo.HistoricoElencos.IdElenco
+	\item dbo.HistoricoElencos.NumeroElenco
+	\item dbo.HistoricoElencos.TipoElenco
+	\item dbo.HistoricoElencos.Expediente
+	\item dbo.HistoricoElencos.Flags
+	\item dbo.HistoricoElencos.FechaInicio
+	\item dbo.HistoricoElencos.FechaFin
+	\item dbo.HistoricoElencos.FechaEnvio
+	\item dbo.HistoricoElencos.Mensaje
+	\item dbo.HistoricoElencos.CodigoDespacho
+	\item dbo.HistoricoElencos.SubCodigoDespacho
+	\item dbo.HistoricoElencos.Descripcion
+	\item dbo.HistoricoElencos.Semi
+	\item dbo.HistoricoElencos.Darsena
+	\item dbo.HistoricoElencos.Automatic
+	\item dbo.HistoricoElencos.Logica
+	\item dbo.HistoricoElencos.Contingencia
+\end{itemize}
+
+\par Con estas condiciones en la cláusula WHERE
+
+\begin{itemize}[label=\textcolor{blue}{\textbullet}]
+	\item dbo.HistoricoElencos.Flags = 1
+	\item dbo.HistoricoElencos.FechaEnvio IS NOT NULL
+\end{itemize}
+
+\par A partir de esta vista se utiliza el  sp \emph{qryBMEUploaderTubosDelElenco} para acceder a cada tubo de este elenco pendiente
+Esto trae toda la información de los tubos, el expediente, ciclo y demás ( antes se traía en varios sps, ahora éste hace todo ).
+
+
+\par Items que debe retornar este sp:
+
+\begin{itemize}[label=\textcolor{blue}{\textbullet}]
+	\item HistoricoTubos.IdTubo,
+	\item HistoricoTubos.[TimeStamp],
+	\item HistoricoTubos.Fecha,
+	\item HistoricoTubos.NroLote,
+	\item HistoricoTubos.Status,
+	\item HistoricoTubos.IdDescarte,
+	\item HistoricoTubos.IdClave,
+	\item HistoricoTubos.Secuencia,
+	\item \begin{verbatim}dbo.fnBmeNumeroTrace(
+			dbo.HistoricoClaves.ExpedienteDestino, 
+			HistoricoTubos.NroTubo) AS NroTubo,\end{verbatim}
+	\item HistoricoTubos.NroCupla,
+	\item dbo.BMEDatosTubos.IdTubo
+	\item dbo.BMEDatosTubos.NroTuboPintado
+	\item dbo.BMEDatosTubos.LongitudPulsos
+	\item dbo.BMEDatosTubos.PesoPulsos
+	\item dbo.BMEDatosTubos.Longitud
+	\item dbo.BMEDatosTubos.Peso
+	\item dbo.BMEDatosTubos.Status
+	\item dbo.BMEDatosTubos.IdElenco
+	\item dbo.BMEDatosTubos.IdPaquete
+	\item dbo.BMEDatosTubos.NroLoteExpe
+	\item dbo.BMEDatosTubos.LongitudPintada
+	\item dbo.BMEDatosTubos.PesoPintado
+	\item dbo.BMEDatosTubos.PiesPintados
+	\item dbo.BMEDatosTubos.LibrasPintadas
+	\item dbo.BMEDatosTubos.CartelEstarcido
+	\item dbo.BMEDatosTubos.CartelPunzonado
+	\item dbo.BMEDatosTubos.LoteTT
+	\item dbo.BMEDatosTubos.ColadaCupla
+	\item dbo.BMEDatosTubos.Colada
+	\item dbo.BMEDatosTubos.FechaEnvio
+	\item dbo.BMEDatosTubos.Mensaje
+	\item dbo.BMEDatosTubos.LoteCupla
+	\item dbo.BMEDatosTubos.ColadaReal
+	\item dbo.BMEDatosTubos.CicloCupla
+	\item dbo.BMEDatosTubos.NroUnion
+	\item dbo.BMEDatosTubos.NroSecu
+	\item dbo.BMEDatosTubos.TraceFlag
+	\item dbo.BMEDatosTubos.PesoTeorico
+	\item dbo.BMEDatosTubos.PctVariacionPeso
+	\item dbo.BMEDatosTubos.PesoMetrico
+	\item dbo.BMEDatosTubos.IdLingada
+	\item dbo.BMEDatosTubos.URC
+	\item dbo.BMEDatosTubos.RfidData
+	\item dbo.BMEDatosTubos.RfidTag
+	\item dbo.BMEDatosTubos.CuplaVirtual
+
+	\item dboHistoricoPaquetes.IdPaquete
+	\item dboHistoricoPaquetes.IdElenco
+	\item dboHistoricoPaquetes.NumeroPaquete
+	\item dboHistoricoPaquetes.Flags
+	\item dboHistoricoPaquetes.FechaInicio
+	\item dboHistoricoPaquetes.FechaFin
+
+	\item dbo.HistoricoElencos.IdElenco
+	\item dbo.HistoricoElencos.NumeroElenco
+	\item dbo.HistoricoElencos.TipoElenco
+	\item dbo.HistoricoElencos.Expediente
+	\item dbo.HistoricoElencos.Flags
+	\item dbo.HistoricoElencos.FechaInicio
+	\item dbo.HistoricoElencos.FechaFin
+	\item dbo.HistoricoElencos.FechaEnvio
+	\item dbo.HistoricoElencos.Mensaje
+	\item dbo.HistoricoElencos.CodigoDespacho
+	\item dbo.HistoricoElencos.SubCodigoDespacho
+	\item dbo.HistoricoElencos.Descripcion
+	\item dbo.HistoricoElencos.Semi
+	\item dbo.HistoricoElencos.Darsena
+	\item dbo.HistoricoElencos.Automatic
+	\item dbo.HistoricoElencos.Logica
+	\item dbo.HistoricoElencos.Contingencia
+
+	\item dbo.HistoricoClaves.IdClave
+	\item dbo.HistoricoClaves.IdEstacion
+	\item dbo.HistoricoClaves.IdProducto
+	\item dbo.HistoricoClaves.Status
+	\item dbo.HistoricoClaves.FechaInicio
+	\item dbo.HistoricoClaves.FechaFin
+	\item dbo.HistoricoClaves.FechaSiderca
+	\item dbo.HistoricoClaves.Turno
+	\item dbo.HistoricoClaves.Escuadra
+	\item dbo.HistoricoClaves.CicloOrigen
+	\item dbo.HistoricoClaves.CicloDestino
+	\item dbo.HistoricoClaves.ExpedienteOrigen
+	\item dbo.HistoricoClaves.ExpedienteDestino
+	\item dbo.HistoricoClaves.Colada
+	\item dbo.HistoricoClaves.Campagna
+	\item dbo.HistoricoClaves.Lote
+	\item dbo.HistoricoClaves.ColadaReal
+	\item dbo.HistoricoClaves.ColadaStock  
+	\item BmedatosTubos.Colada AS ColadaTubo 
+\end{itemize}
+
+\par Con estas condiciones en la cláusula WHERE
+
+\begin{itemize}[label=\textcolor{blue}{\textbullet}]
+	\item BMEDatosTubos.IdElenco=@IdElenco 
+	\item BMEDatosTubos.Status=1 
+\end{itemize}
+
+\par Con estas condiciones de order (ORDER BY)
+
+\begin{itemize}[label=\textcolor{blue}{\textbullet}]
+	\item NroTuboPintado	
+\end{itemize}
+
+\newpage
+
+\subsection{Descartes}
+
+\par Utiliza una vista para obtener los tubos descartados \emph{vwBMEUploaderDescartes}
+
+\par Items que debe retornar esa vista:
+
+\begin{itemize}[label=\textcolor{blue}{\textbullet}]
+	\item dbo.HistoricoTubos.IdDescarte, 
+	\item dbo.HistoricoTubos.Fecha, 
+	\item dbo.HistoricoTubos.NroLote, 
+	\item dbo.HistoricoTubos.NroTubo, 
+	\item dbo.HistoricoTubos.NroCupla, 
+	\item dbo.HistoricoTubos.Secuencia, 
+	\item dbo.HistoricoDescartes.ID, 
+	\item dbo.HistoricoDescartes.Codigo, 
+	\item dbo.HistoricoDescartes.FechaDescarte,
+	\item dbo.HistoricoDescartes.IDDefecto1,
+	\item dbo.HistoricoDescartes.IDDefecto3,
+	\item dbo.HistoricoDescartes.IDDefecto2, 
+	\item dbo.HistoricoDescartes.IDDefecto4,
+	\item dbo.HistoricoDescartes.IDDefecto5, 
+	\item dbo.HistoricoDescartes.Obs, 
+	\item dbo.HistoricoClaves.FechaSiderca, 
+	\item dbo.HistoricoClaves.Turno, 
+	\item dbo.HistoricoClaves.CicloOrigen,
+	\item dbo.HistoricoClaves.CicloDestino,
+	\item dbo.HistoricoClaves.ExpedienteOrigen,
+	\item dbo.HistoricoClaves.ExpedienteDestino,
+	\item dbo.HistoricoClaves.IdEstacion, 
+	\item dbo.HistoricoClaves.Escuadra, 
+	\item dbo.BMEDatosTubos.IdTubo, 
+	\item ISNULL(dbo.BMEDatosTubos.NroTuboPintado, 0) as NroTuboPintado, 
+	\item dbo.BMEDatosTubos.LongitudPulsos, 
+	\item dbo.BMEDatosTubos.PesoPulsos, 
+	\item ISNULL(dbo.BMEDatosTubos.Longitud , 0 ) as Longitud , 
+	\item dbo.BMEDatosTubos.Status, 
+	\item ISNULL(dbo.BMEDatosTubos.Peso, 0 ) as Peso , 
+	\item dbo.BMEDatosTubos.IdElenco, 
+	\item dbo.BMEDatosTubos.IdPaquete, 
+	\item dbo.BMEDatosTubos.NroLoteExpe, 
+	\item ISNULL(dbo.BMEDatosTubos.LongitudPintada, 0 ) as LongitudPintada, 
+	\item ISNULL(dbo.BMEDatosTubos.PesoPintado, 0 )as PesoPintado , 
+	\item ISNULL(dbo.BMEDatosTubos.PiesPintados , 0 ) as PiesPintados , 
+	\item ISNULL(dbo.BMEDatosTubos.LibrasPintadas , 0 ) as LibrasPintadas , \item dbo.BMEDatosTubos.CartelEstarcido, 
+	\item dbo.BMEDatosTubos.CartelPunzonado, 
+	\item ISNULL( dbo.BMEDatosTubos.LoteTT, 0 ) as LoteTT , 
+	\item dbo.BMEDatosTubos.ColadaCupla, dbo.BMEDatosTubos.FechaEnvio, 
+	\item dbo.BMEDatosTubos.Mensaje, dbo.BMEDatosTubos.Colada, 
+	\item dbo.BMEDatosTubos.LoteCupla, 
+	\item dbo.BMEDatosTubos.ColadaReal, 
+	\item dbo.BMEDatosTubos.CicloCupla, 
+	\item dbo.BMEDatosTubos.NroUnion, 
+	\item dbo.BMEDatosTubos.NroSecu, 
+	\item dbo.BMEDatosTubos.TraceFlag
+\end{itemize}
+
+\par Con estas condiciones en la cláusula WHERE
+
+\begin{itemize}[label=\textcolor{blue}{\textbullet}]
+	\item dbo.HistoricoDescartes.Status = 1
+	\item dbo.BMEDatosTubos.Status <> 1
+	\item dbo.BMEDatosTubos.Status <> 5
+	\item dbo.BMEDatosTubos.Status <> 11
+	\item dbo.BMEDatosTubos.Status <> 12
+	\item dbo.BMEDatosTubos.Status <> 98
+\end{itemize}
+
+\par Con estas condiciones de order (ORDER BY)
+
+\begin{itemize}[label=\textcolor{blue}{\textbullet}]
+	\item dbo.HistoricoTubos.Fecha DESC
+\end{itemize}
+
+\newpage
+
+\subsection{Patrones}
+
+\par Utiliza una vista para obtener los tubos descartados \emph{vwDocuRepPatrones}
+
+\par Items que debe retornar esa vista:
+
+\begin{itemize}[label=\textcolor{blue}{\textbullet}]
+\item dbo.HistoricoTubos.IdTubo, 
+\item dbo.Replicacion.ID, 
+\item dbo.HistoricoTubosPatron.IdPatron, 
+\item dbo.BMEDatosTubos.Longitud, 
+\item dbo.BMEDatosTubos.Peso, 
+\item dbo.HistoricoClaves.IdEstacion, 
+\item dbo.HistoricoTubos.Fecha, 
+\item dbo.BMEDatosTubos.LongitudPulsos, 
+\item dbo.BMEDatosTubos.PesoPulsos,
+\item \begin{verbatim}
+	(SELECT     ValorFloat FROM          dbo.HistoricoPresetsPLC
+	WHERE      (NroLote =
+	(SELECT     MAX(NroLote) AS Expr1
+		FROM          dbo.HistoricoPresetsPLC AS HistoricoPresetsPLC_9
+		WHERE      (IdPreset = 10030) AND (NroLote <= ht.NroLote)))) AS CML1001,
+	\end{verbatim}
+
+\item \begin{verbatim}(SELECT     ValorFloat
+FROM          dbo.HistoricoPresetsPLC AS HistoricoPresetsPLC_8
+WHERE      (NroLote =
+(SELECT     MAX(NroLote) AS Expr1
+FROM          dbo.HistoricoPresetsPLC AS HistoricoPresetsPLC_7
+WHERE      (IdPreset = 10028) AND (NroLote <= ht.NroLote)))) AS CAL1000,
+\end{verbatim}
+\item \begin{verbatim}(SELECT     ValorFloat
+FROM          dbo.HistoricoPresetsPLC AS HistoricoPresetsPLC_6
+WHERE      (NroLote =
+(SELECT     MAX(NroLote) AS Expr1
+FROM          dbo.HistoricoPresetsPLC AS HistoricoPresetsPLC_5
+WHERE      (IdPreset = 10033) AND (NroLote <= ht.NroLote)))) AS CP1002,\end{verbatim}
+\item \begin{verbatim}(SELECT     ValorFloat
+FROM          dbo.HistoricoPresetsPLC AS HistoricoPresetsPLC_4
+WHERE      (NroLote =
+(SELECT     MAX(NroLote) AS Expr1
+FROM          dbo.HistoricoPresetsPLC AS HistoricoPresetsPLC_3
+WHERE      (IdPreset = 10032) AND (NroLote <= ht.NroLote)))) AS DES1003,\end{verbatim}
+\item \begin{verbatim}(SELECT     ValorFloat
+FROM          dbo.HistoricoPresetsPLC AS HistoricoPresetsPLC_2
+WHERE      (NroLote =
+(SELECT     MAX(NroLote) AS Expr1
+FROM          dbo.HistoricoPresetsPLC AS HistoricoPresetsPLC_1
+WHERE      (IdPreset = 10029) AND (NroLote <= ht.NroLote)))) AS CAC1004 \end{verbatim}
+\end{itemize}
+
+\par Con estas condiciones en la cláusula WHERE
+
+\begin{itemize}[label=\textcolor{blue}{\textbullet}]
+	\item dbo.BMEDatosTubos.Status = 5
+	\item dbo.Replicacion.Procesado = 0
+\end{itemize}
+
+\subsection{Cambiar status de elenco}
+
+\par Para cambiar el status de Elencos, el sistema utiliza el sp \emph{doBMETubosSetElencoFlags} que en este caso lo establece en \emph {3}
+
+
+\end{document}
+
