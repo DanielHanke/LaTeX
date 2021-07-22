@@ -65,58 +65,7 @@
     {\large \@author}}              
 \makeatother
 
-\newcommand\titlepagedecoration[1]{%
-\begin{tikzpicture}[remember picture,overlay,shorten >= -10pt]
-\coordinate (tp1) at ([yshift=2cm]current page.west);
-\coordinate (tp2) at ([yshift=2cm,xshift=9cm]current page.west);
-\coordinate (tp3) at ([yshift=-15pt,xshift=7cm]current page.north);
-\coordinate (tp4) at ([yshift=-15pt]current page.north west);
-% Place text to het its coordinates
-\node[right] (titletext) at ([xshift=1cm,yshift=-5cm]current page.north west) {\parbox{\textwidth}{\color{white}#1}};
-
-\path[name path=p1] ([xshift=-5cm]tp2) -- ([xshift=-5cm]tp3);
-\path[name path=p2] (tp2) -- (tp3);
-\path[name path=p3] (tp1 |- titletext.south) -- (titletext.south -| tp3);
-
-\path[name intersections={of=p1 and p3,name=first}];
-\path[name intersections={of=p2 and p3,name=second}];
-
-\filldraw[colorSecundario!60!white] (first-1) -- (second-1) -- (tp3) -- ([xshift=-5cm]tp3) -- cycle;
-\filldraw[colorSecundario!40!white] (tp4) -- ([xshift=-5cm]tp3) -- (first-1) -- (tp1 |- titletext.south) -- cycle;
-\filldraw[colorSecundario!60!white] (tp1 |- titletext.south) -- (first-1) -- ([xshift=-5cm]tp2) -- (tp1) -- cycle;
-\filldraw[colorSecundario!40!white] (first-1) -- (second-1) -- (tp2) -- ([xshift=-5cm]tp2) -- cycle;
-
-% X = -6 <-> 16
-
-\filldraw[colorPrincipal]  (-6,5) rectangle (2,4.5);
-\filldraw[colorSecundario]  (2,5) rectangle (10,4.5);
-\filldraw[colorTerciario]  (10,5) rectangle (18,4.5);
-
-%\filldraw[gray!100!white]  (-3.+18,4.0    ) rectangle (-1.5+18,4.2); % 1w
-%\filldraw[gray!80!white]    (-4.6+18,4.0	 ) rectangle (-3.1+18,4.2); %1.5w
-%\filldraw[gray!60!white]    (-6.7+18,4.0	 ) rectangle (-4.7+18,4.2);
-%\filldraw[gray!40!white]    (-9.3+18,4.0	 ) rectangle (-6.8+18,4.2);
-%\filldraw[gray!20!white]    (-13.4+18,4.0) rectangle (-9.4+18,4.2);
-
-%\node[inner sep=0pt] (russell) at (0,0)
-%    {\includegraphics[width=.25\textwidth]{../../../common/images/coding-on-laptop.jpg}};
-%\node[inner sep=0pt] (whitehead) at (5,-6)
-%    {\includegraphics[width=.25\textwidth]{../../../common/images/logo_trend.jpg}};
-
-%\filldraw[gray!100!white]  (-3.+18,4.0    ) rectangle (-1.5+18,4.2); % 1w
-%\filldraw[gray!80!white]    (-4.6+18,4.0	 ) rectangle (-3.1+18,4.2); %1.5w
-%\filldraw[gray!60!white]    (-6.7+18,4.0	 ) rectangle (-4.7+18,4.2);
-%\filldraw[gray!40!white]    (-9.3+18,4.0	 ) rectangle (-6.8+18,4.2);
-%\filldraw[gray!20!white]    (-13.4+18,4.0) rectangle (-9.4+18,4.2);
-
-
-
-% Place text again, to have it on top
-\node[right] (titletext) at ([xshift=1cm,yshift=-5cm]current page.north west) {\parbox{\textwidth}{\color{black}#1}};
-
-
-\end{tikzpicture}%
-}
+\input{../../../common/backgrounds/basic}
 
 \lstset{% general command to set parameter(s)
 keywordstyle=\color{violet!55}\bfseries,
